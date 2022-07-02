@@ -1,6 +1,8 @@
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
+
+import { handleInputChange } from '../helpers/common-helper';
 import '../css/Login.css';
 import { login } from '../features/userSlice';
 import { auth } from '../my-firebase-config';
@@ -12,15 +14,7 @@ function Register() {
   const [inputs, setInputs] = useState({});
   const [page, setPage] = useState('register');
 
-  const handleChange = (event) => {
-    const name = event.target.name;
-    const value = event.target.value;
-
-    /* dynamically set state by key value */
-    setInputs({ ...inputs, [name]: value });
-    /* or like this */
-    // setInputs((previousValues) => ({ ...previousValues, [name]: value }));
-  };
+  const inputChangeHandler = (e) => handleInputChange(e, inputs, setInputs);
 
   const loginUser = () => {
     setPage('login');
@@ -75,28 +69,28 @@ function Register() {
           name="fullName"
           placeholder="Full Name"
           value={inputs.fullName || ''}
-          onChange={handleChange}
+          onChange={inputChangeHandler}
         />
         <input
           type="text"
           name="email"
           placeholder="Email"
           value={inputs.email || ''}
-          onChange={handleChange}
+          onChange={inputChangeHandler}
         />
         <input
           type="password"
           name="password"
           placeholder="Password"
           value={inputs.password || ''}
-          onChange={handleChange}
+          onChange={inputChangeHandler}
         />
         <input
           type="text"
           name="picUrl"
           placeholder="Profile Picture Url"
           value={inputs.picUrl || ''}
-          onChange={handleChange}
+          onChange={inputChangeHandler}
         />
         {/* "event" argument is still passed if we call function without argument like this */}
         <button type="submit">Register</button>
